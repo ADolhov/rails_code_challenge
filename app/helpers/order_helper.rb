@@ -1,5 +1,5 @@
 module OrderHelper
-  def search_by_options(params = {})
+  def search_by_options(search_by = 'Search by')
     options_for_select([
       'Search by',
       'order_number',
@@ -9,6 +9,6 @@ module OrderHelper
       'state',
       'city'
     ],
-    params[:search_by])
+    search_by)
   end
 end

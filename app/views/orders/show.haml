@@ -1,0 +1,52 @@
+%h2 Order Details
+%dl.row
+  %dt.col-sm-3 Order Number
+  %dd.col-sm-9= @order.number
+
+  %dt.col-sm-3 Address(main)
+  %dd.col-sm-9= @order.address.address1
+
+  %dt.col-sm-3 Address(secondary)
+  %dd.col-sm-9= @order.address.address2
+
+%h2 User Details
+%dl.row
+  %dt.col-sm-3 User Name
+  %dd.col-sm-9= @order.user.name
+
+  %dt.col-sm-3 User Email
+  %dd.col-sm-9= @order.user.email
+
+%h2 Order Items
+%table.table
+  %thead
+    %th Product Name
+    %th Product SKU
+    %th Product Type
+    %th Quantity
+    %th Price
+    %th State
+  %tbody
+    - @order.order_items.each do |item|
+      %tr
+        %td= item.source.name
+        %td= item.source.try(:sku)
+        %td= item.source_type
+        %td= item.quantity
+        %td= item.price
+        %td= item.state
+
+%h2 Order Payments
+%table.table
+  %thead
+    %th Payment ID
+    %th Amount
+    %th State
+    %th Updated at
+  %tbody
+    - @order.payments.each do |payment|
+      %tr
+        %td= payment.id
+        %td= payment.amount
+        %td= payment.state
+        %td= payment.updated_at

@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
   before_action :find_order!, only: :show
+  helper_method :orders_params
 
   def index
-    if search_by && params[:query].present?
-      @orders ||= Order.joins([:user, :address]).where("#{search_by} LIKE ?", "%#{params[:query]}%")
+    if search_by && order_search_params[:query].present?
+      @orders ||= Order.joins([:user, :address]).where("#{search_by} LIKE ?", "%#{order_search_params[:query]}%")
     else
       @orders ||= Order.preload([:user, :address])
     end
@@ -18,7 +19,7 @@ class OrdersController < ApplicationController
   end
 
   def search_by
-    case params[:search_by].to_sym
+    case order_search_params[:search_by]&.to_sym
     when :order_number
       'orders.number'
     when :order_state
@@ -34,5 +35,9 @@ class OrdersController < ApplicationController
     else
       nil
     end
+  end
+
+  def order_search_params
+    params.permit(:search_by, :query)
   end
 end
