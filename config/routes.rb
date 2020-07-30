@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:index, :show], param: :number
 
-  resources :reports, only: :index do
+  resources :reports, only: [:index] do
+    collection do
+      get :coupon_users
+      get :sales_by_product
+    end
   end
 end

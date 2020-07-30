@@ -19,4 +19,12 @@ class User < ApplicationRecord
 
   has_many :orders
   has_many :addresses
+
+  def arrived_orders_by_coupon(coupon_id)
+    orders.arrived.by_coupon(coupon_id)
+  end
+
+  def arrived_orders_revenue(coupon_id)
+    arrived_orders_by_coupon(coupon_id).pluck(:total).sum
+  end
 end

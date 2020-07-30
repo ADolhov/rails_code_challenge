@@ -1,7 +1,6 @@
 module OrderHelper
-  def search_by_options(search_by = 'Search by')
+  def search_by_options(search_by)
     options_for_select([
-      'Search by',
       'order_number',
       'order_state',
       'user_email',

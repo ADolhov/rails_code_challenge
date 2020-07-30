@@ -29,6 +29,14 @@ class Order < ApplicationRecord
                 message: 'only accepts 2 decimal places.'
               }
 
+
+  scope :arrived, -> { where.not(arrived_at: nil) }
+  scope :by_coupon, ->(coupon_id) do
+    joins(:order_items)
+      .where(order_items: {source_type: "Coupon", source_id: coupon_id })
+      .group(:id)
+  end
+
   belongs_to :user
   belongs_to :address
 

@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     if search_by && order_search_params[:query].present?
       @orders ||= Order.joins([:user, :address]).where("#{search_by} LIKE ?", "%#{order_search_params[:query]}%")
     else
-      @orders ||= Order.preload([:user, :address])
+      @orders ||= Order.joins([:user, :address])
     end
   end
 
