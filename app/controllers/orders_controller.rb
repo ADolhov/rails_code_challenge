@@ -4,9 +4,12 @@ class OrdersController < ApplicationController
 
   def index
     if search_by && order_search_params[:query].present?
-      @orders ||= Order.joins([:user, :address]).where("#{search_by} LIKE ?", "%#{order_search_params[:query]}%")
+      @orders ||= Order
+        .preload([:user, :address])
+        .joins([:user, :address])
+        .where("#{search_by} LIKE ?", "%#{order_search_params[:query]}%")
     else
-      @orders ||= Order.joins([:user, :address])
+      @orders ||= Order.preload([:user, :address])
     end
   end
 
