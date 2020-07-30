@@ -36,4 +36,6 @@ class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :source,
              polymorphic: true
+
+  scope :with_product, -> { joins("INNER JOIN products ON products.id = order_items.source_id AND order_items.source_type = 'Product'") } 
 end

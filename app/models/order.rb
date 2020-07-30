@@ -29,8 +29,8 @@ class Order < ApplicationRecord
                 message: 'only accepts 2 decimal places.'
               }
 
-
-  scope :arrived, -> { where.not(arrived_at: nil) }
+  scope :arrived_in_time_range, -> (from_date, to_date){ where('arrived_at > ? and arrived_at < ?', from_date, to_date) }
+  scope :arrived, -> { where(state: :arrived) }
   scope :by_coupon, ->(coupon_id) do
     joins(:order_items)
       .where(order_items: {source_type: "Coupon", source_id: coupon_id })

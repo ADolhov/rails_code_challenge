@@ -1,1 +1,24 @@
-sales_by_product
+= form_tag sales_by_product_reports_path, method: :get, class: "row" do
+  .col-sm-3
+    = date_field_tag :from_date, params[:from_date], class: "form-control"
+  .col-sm-3
+    = date_field_tag :to_date, params[:to_date], class: "form-control"
+  .col-sm-2
+    = submit_tag t("get_report"), method: :get, class: "btn btn-primary"
+
+- if @products.present?
+  %table.table
+    %thead
+      %th Product ID
+      %th Product Name
+      %th Product SKU
+      %th Sold Count
+      %th Total Revenue
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.id
+          %td= product.name
+          %td= product.sku
+          %td= product.sold_quantity
+          %td= product.sold_revenue
