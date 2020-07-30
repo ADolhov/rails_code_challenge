@@ -1,0 +1,27 @@
+= form_tag orders_path, method: :get do
+  .col-xs-2
+    = select_tag :search_by, search_by_options(params), class: "form-control"
+  .col-xs-8
+    = text_field_tag :query, params[:query], placeholder: "Enter search query", class: "form-control"
+  .col-xs-2
+    = submit_tag 'Search', method: :get, class: "btn btn-primary"
+
+%table.table
+  %thead
+    %th Order Number
+    %th Order State
+    %th Total
+    %th User Email
+    %th User Name
+    %th State
+    %th City
+  %tbody
+  - @orders.each do |order|
+    %tr
+      %td= order.number
+      %td= order.state
+      %td= order.total
+      %td= order.user.email
+      %td= order.user.name
+      %td= order.address.state
+      %td= order.address.city
